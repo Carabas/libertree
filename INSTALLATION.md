@@ -147,7 +147,7 @@ As the libertree user:
     % cp application.yaml.example application.yaml
 
 To start the application server on port 8088:
-
+    % cd ..
     % bundle exec unicorn -p 8088
 
 ## Web Server Proxy
@@ -194,7 +194,16 @@ example configuration snippets for them.
     }
 
 ### Apache
-
+You have to enable the proxy_balancer module:
+    a2enmod proxy_balancer
+(Debian): your /etc/apache2/mods-available/proxy_balancer.conf should look like
+    <IfModule mod_proxy_balancer.c>
+    <Proxy *>
+    Order deny,allow
+    Allow from all
+    </Proxy>
+    </IfModule>
+Virtualhost file:
     <VirtualHost *:80>
         ServerName serverdomain.com
         ServerAlias serverdomain.com
